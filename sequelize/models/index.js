@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import { userFactory } from "./user.js";
+import { appointmentFactory } from "./appointment";
 
 const database = process.env.DB_NAME;
 const username = process.env.DB_USERNAME;
@@ -15,6 +16,7 @@ const db = {
   sequelize,
   Sequelize,
   User: userFactory(sequelize),
+  Appointment: appointmentFactory(sequelize),
 };
 
 export default db;
