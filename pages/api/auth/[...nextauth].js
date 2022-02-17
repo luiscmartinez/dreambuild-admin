@@ -12,8 +12,12 @@ export default NextAuth({
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        username: { label: "Username", type: "text", placeholder: "username" },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "password",
+        },
       },
       type: "credentials",
       async authorize(credentials, req) {
@@ -24,15 +28,13 @@ export default NextAuth({
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
 
-        const res = await fetch("http://localhost:3000/api/hello", {
-          method: "GET",
-          // body: JSON.stringify(credentials),
+        const res = await fetch("http://localhost:9999/auth/login", {
+          method: "POST",
+          body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
         });
-        const resJson = await res.json();
-        console.log("resJson:", resJson);
-        console.log("LOGGGGIN", credentials);
-        const user = { id: 1, name: "J Smith", email: "jsmith@example.com" };
+        const { user } = await res.json();
+        console.log("resJson:", user);
 
         // If no error and we have user data, return it
         if (user) {
@@ -44,4 +46,28 @@ export default NextAuth({
     }),
   ],
   secret: "A_SECRET",
+  callbacks: {
+    jwt: ({ token, account, user }) => {
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      if (user) {
+        token["username"] = user.username;
+        return token;
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      // Send properties to the client, like an access_token from a provider.
+      session.accessToken = token.accessToken;
+      if (token) {
+        session.user["username"] = token.username;
+      }
+      return session;
+    },
+  },
+  jwt: {
+    encryption: true,
+  },
 });
