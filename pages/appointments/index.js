@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "../../styles/Appointments.module.css";
+import { Appointments } from "../../components/appointments";
 
 function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
@@ -45,21 +46,7 @@ function AppointmentsPage() {
             read
           </div>
         </div>
-        {!loading &&
-          filterAppointments().map((appointment) => {
-            const { read, email, id, body } = appointment;
-            return (
-              <div
-                key={id}
-                className={
-                  read ? styles.appointmentRead : styles.appointmentUnread
-                }
-              >
-                <p>from: {email}</p>
-                <p>body: {body}</p>
-              </div>
-            );
-          })}
+        {!loading && <Appointments appointments={filterAppointments()} />}
       </div>
     </>
   );
