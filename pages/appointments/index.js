@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "../../styles/Appointments.module.css";
 import { Appointments } from "../../components/appointments";
 
-function AppointmentsPage() {
+export function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [isSelected, setSelected] = useState(true);
   // for some reason it's standard to init loading to false
@@ -51,4 +51,3 @@ function AppointmentsPage() {
     </>
   );
 }
-export default AppointmentsPage;
