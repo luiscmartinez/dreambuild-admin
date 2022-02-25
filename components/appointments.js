@@ -1,5 +1,5 @@
 import styles from "../styles/Appointments.module.css";
-import { Radio } from "antd";
+import { RadioBtn } from "./radioBtn.js";
 
 export function Appointments({ appointments }) {
   const handleClickRead = async (appointmentId) => {
@@ -19,11 +19,9 @@ export function Appointments({ appointments }) {
         key={id}
         className={read ? styles.appointmentRead : styles.appointmentUnread}
       >
-        <div>
-          <Radio onChange={() => handleClickRead(id)} /> read
-        </div>
+        <RadioBtn id={id} handleClickRead={handleClickRead} isRead={read} />
         <p>from: {email}</p>
-        <p>body: {body}</p>
+        <p>message: {body}</p>
       </div>
     );
   });
