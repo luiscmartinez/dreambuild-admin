@@ -1,6 +1,6 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect } from "react";
-import { AppointmentsPage } from "./appointments/index.js";
+import AppointmentsPage from "./appointments/index.js";
 
 function AuthLinks() {
   const { data: session, status } = useSession(); //client side
