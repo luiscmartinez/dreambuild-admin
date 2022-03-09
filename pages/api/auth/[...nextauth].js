@@ -1,10 +1,12 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loadEnvConfig } from "@next/env";
+import NextAuth from "next-auth";
 
 loadEnvConfig("./").combinedEnv;
 
 export default NextAuth({
+  site: process.env.NEXTAUTH_URL,
   providers: [
     CredentialsProvider({
       id: "domain-login",
