@@ -1,5 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { loadEnvConfig } from "@next/env";
+
+loadEnvConfig("./").combinedEnv;
 
 export default NextAuth({
   providers: [
@@ -27,21 +30,26 @@ export default NextAuth({
         // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
+        try {
+          const { APP_URL } = process.env;
+          const res = await fetch(`${APP_URL}/api/users`, {
+            method: "POST",
+            body: JSON.stringify(credentials),
+            headers: { "Content-Type": "application/json" },
+          });
 
-        const res = await fetch("http://localhost:9999/auth/login", {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
-        });
-        const { user } = await res.json();
-        console.log("resJson:", user);
+          const { user } = await res.json();
+          console.log("resJson:", user);
 
-        // If no error and we have user data, return it
-        if (user) {
-          return user;
+          // If no error and we have user data, return it
+          if (user) {
+            return user;
+          }
+        } catch (err) {
+          console.log("WHAT AN ERR", err);
+          // Return null if user data could not be retrieved
+          return null;
         }
-        // Return null if user data could not be retrieved
-        return null;
       },
     }),
   ],
