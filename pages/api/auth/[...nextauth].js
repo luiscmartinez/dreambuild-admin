@@ -4,8 +4,9 @@ import { loadEnvConfig } from "@next/env";
 
 loadEnvConfig("./").combinedEnv;
 
+const { APP_URL } = process.env;
 export default NextAuth({
-  site: process.env.NEXTAUTH_URL,
+  site: APP_URL,
   providers: [
     CredentialsProvider({
       id: "domain-login",
@@ -32,7 +33,6 @@ export default NextAuth({
         // You can also use the `req` object to obtain additional parameters
         // (i.e., the request IP address)
         try {
-          const { APP_URL } = process.env;
           const res = await fetch(`${APP_URL}/api/users`, {
             method: "POST",
             body: JSON.stringify(credentials),
