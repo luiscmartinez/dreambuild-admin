@@ -13,7 +13,7 @@ export default function AppointmentsPage() {
     const { appointments } = await response.json();
     setAppointments(appointments);
     setLoading(false);
-  }, [appointments]);
+  }, []);
 
   const handleSelect = () => {
     //updating state based on current value of state

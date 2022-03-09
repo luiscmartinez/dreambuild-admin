@@ -2,7 +2,29 @@ import db from "../../../sequelize/models/index.js";
 import { getSession } from "next-auth/react";
 import Cors from "cors";
 
+const cors = Cors({
+  methods: ["GET", "HEAD", "POST"],
+  origin: process.env.WHITELIST_DOMAIN,
+});
+
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
+
 export default async function handler(req, res) {
+  try {
+    await runMiddleware(req, res, cors);
+  } catch (err) {
+    console.log("A MIDDLEWARE ERROR");
+  }
   if (req.method === "GET") {
     const session = await getSession({ req });
     if (!session) {
