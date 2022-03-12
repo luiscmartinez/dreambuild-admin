@@ -22,7 +22,7 @@ export default function Instagram() {
         <a
           href={`https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=user_profile,user_media&response_type=code`}
           target="_blank"
-          rel="noopener"
+          rel="noreferrer"
         >
           connect to instagram
         </a>
