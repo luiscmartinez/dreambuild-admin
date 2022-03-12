@@ -63,6 +63,7 @@ export default NextAuth({
       }
       if (user) {
         token["username"] = user.username;
+        token["id"] = user.id;
         return token;
       }
       return token;
@@ -72,6 +73,7 @@ export default NextAuth({
       session.accessToken = token.accessToken;
       if (token) {
         session.user["username"] = token.username;
+        session.user["id"] = token.id;
       }
       return session;
     },
