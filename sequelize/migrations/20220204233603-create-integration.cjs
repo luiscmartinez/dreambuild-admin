@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Integrations', {
+    await queryInterface.createTable("Integrations", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,16 +10,25 @@ module.exports = {
       accessToken: {
         type: Sequelize.STRING,
       },
-      serviceUserId: {
+      provider: {
+        type: Sequelize.STRING,
+      },
+      providerAccountId: {
+        type: Sequelize.STRING,
+      },
+      expiresAt: {
+        type: Sequelize.STRING,
+      },
+      tokenType: {
         type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'Users',
+            tableName: "Users",
           },
-          key: 'id',
+          key: "id",
         },
         allowNull: false,
       },
@@ -31,9 +40,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    })
+    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Integrations')
+    await queryInterface.dropTable("Integrations");
   },
-}
+};
