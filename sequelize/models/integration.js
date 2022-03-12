@@ -18,6 +18,10 @@ export const integrationFactory = (sequelize) => {
     {
       accessToken: DataTypes.STRING,
       userId: DataTypes.STRING,
+      provider: DataTypes.STRING,
+      providerAccountId: DataTypes.STRING,
+      expiresAt: DataTypes.STRING,
+      tokenType: DataTypes.STRING,
     },
     {
       sequelize,
