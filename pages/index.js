@@ -13,12 +13,12 @@ function AuthLinks() {
   return (
     <>
       {session ? (
-        <p>
+        <div>
           <span>Signed in as {session?.user?.username}</span>
           <button onClick={signOut}>Sign out</button>
           <AppointmentsPage />
           <Instagram />
-        </p>
+        </div>
       ) : (
         <>
           <button onClick={signIn}>Sign in</button>
