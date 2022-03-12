@@ -9,6 +9,7 @@ export default function AppointmentsPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
+    setLoading(true);
     const response = await fetch("/api/appointments");
     const { appointments } = await response.json();
     setAppointments(appointments);
