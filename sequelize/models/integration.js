@@ -10,7 +10,6 @@ export const integrationFactory = (sequelize) => {
      */
     static associate(models) {
       // define association here
-      console.log("MODELS", models);
       Integration.belongsTo(models.User);
     }
   }

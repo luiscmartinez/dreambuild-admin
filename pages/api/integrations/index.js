@@ -18,8 +18,6 @@ export default async function handler(req, res) {
     if (integration) {
       const instagramUser = await queryUserNode(integration.accessToken);
 
-      console.log("instagramUser", instagramUser.data);
-
       res.status(200).json({ integration: instagramUser.data });
     }
     res.status(200).json({ integration });

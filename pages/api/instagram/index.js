@@ -46,6 +46,7 @@ export default async function handler(req, res) {
           })
             .then((success) => {
               console.log(success);
+              return res.redirect(301, redirect_uri);
             })
             .catch((err) => console.log(err));
           return response.data;
@@ -53,6 +54,6 @@ export default async function handler(req, res) {
     })
     .catch((err) => {
       console.log("ERROR", err.response);
+      return res.status(500);
     });
-  return res.redirect(301, "https://8033-108-185-87-138.ngrok.io");
 }

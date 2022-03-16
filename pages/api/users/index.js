@@ -22,6 +22,5 @@ export default async function handler(req, res) {
     return;
   }
   const users = await db.User.findAll();
-  console.log("users:", users);
   res.status(200).json({ users });
 }

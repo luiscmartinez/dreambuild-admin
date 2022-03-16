@@ -5,8 +5,6 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
-  console.log("session:", session);
-  console.log("pageProps:", pageProps);
   if (process.env.NODE_ENV === "production") {
     LogRocket.init("dgb/dreambuild");
   }
