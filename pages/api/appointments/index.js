@@ -1,30 +1,8 @@
 import db from "../../../sequelize/models/index.js";
 import { getSession } from "next-auth/react";
-import Cors from "cors";
+import { withCors } from "../../../middleware/withCors.js";
 
-const cors = Cors({
-  methods: ["GET", "HEAD", "POST"],
-  origin: process.env.WHITELIST_DOMAIN,
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-
-      return resolve(result);
-    });
-  });
-}
-
-export default async function handler(req, res) {
-  try {
-    await runMiddleware(req, res, cors);
-  } catch (err) {
-    console.log("A MIDDLEWARE ERROR");
-  }
+async function handler(req, res) {
   if (req.method === "GET") {
     const session = await getSession({ req });
     if (!session) {
@@ -41,14 +19,13 @@ export default async function handler(req, res) {
         email,
         body,
       });
-      res.status(200).json({ appointment });
-      return;
+      return res.status(200).json({ appointment });
     }
-  } else if (req.method === "DELETE") {
-    return;
+    // bad request needs phone number or email
+    return res
+      .status(400)
+      .json({ error: "bad request. Phone or Email required" });
   }
-  // bad request needs phone number or email
-  return res
-    .status(400)
-    .json({ error: "bad request. Phone or Email required" });
 }
+
+export default withCors(handler, ["POST"]);
